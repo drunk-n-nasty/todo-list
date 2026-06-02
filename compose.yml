@@ -1,0 +1,44 @@
+services:
+  postgres:
+    image: postgres:17-alpine 
+    container_name: pg-container
+    ports:
+      - "15432:5432"
+    volumes:
+      - my_tom:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+    networks:
+      - dbnet
+  
+  fastapi:
+    build: ./todo-app-backend
+    container_name: fastapi-container
+    ports:
+      - "127.0.0.1:8080:8080"
+    networks:
+      - dbnet
+    depends_on:
+      - postgres
+
+  node:
+    build: ./todo-app-frontend
+    container_name: node-container 
+    ports:
+      - 3000:3000 
+    environment:
+      - REACT_APP_API_URL=http://localhost:8080
+    networks:
+      - dbnet
+    depends_on:
+      - fastapi
+
+networks:
+  dbnet:
+    driver: bridge
+
+volumes:
+  my_tom:
+  
