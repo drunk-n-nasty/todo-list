@@ -23,5 +23,5 @@ yarn-error.log*
 #local
 .env
 .vscode
-.__pycache__
 .venv
+__pycache__/
