@@ -33,15 +33,20 @@
 | Docker / Compose | Контейнеризация |
 | Docker Networks | Изоляция сервисов |
 
-### Запуск проекта
+## Запуск проекта
 
 ```bash
 # 1. Клонировать репозиторий
 git clone https://github.com/yourusername/todo-app.git
 cd todo-app
 
-# 2. Запустить все сервисы
+# 2. Создать файл .env с переменными окружения
+DATABASE_URL=postgresql+psycopg://postgres:admin@postgres:5432/postgres
+ALLOWED_ORIGINS=http://localhost:3000
+EOF
+
+# 3. Запустить все сервисы
 docker-compose up -d
 
-# 3. Проверить статус контейнеров
+# 4. Проверить статус контейнеров
 docker-compose ps
